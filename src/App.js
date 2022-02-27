@@ -3,6 +3,7 @@ import faker from '@faker-js/faker';
 
 const appCss={
    textAllign:'center',
+   alignItems:'center',
    justifyContent:'center',
    color:'silver',
    border:'3px solid black'
