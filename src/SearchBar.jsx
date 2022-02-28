@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import './App.css';
 
 const id='X90pt6oipcVMjX8-ZKI92yJpq3ZiHc7Xz3ZuX9P3aG4';
 class SearchBar extends React.Component{
     
-    state={searchItem: '',imageUrl: ''}
+    state={searchItem: '',imageUrl:[]}
     handlerForChange = async (e)=>{
+    
         this.setState({ searchItem: e.target.value});
         console.log(this.state.searchItem);
         const response= await axios.get(
@@ -14,14 +16,23 @@ class SearchBar extends React.Component{
             headers:{Authorization: `Client-ID ${id}`}
          }
         );
-        this.setState({imageUrl :response.data.results[0].urls.regular});
+        this.setState({imageUrl :response.data.results});
     }
     render() {
-        return(<div>
+        return(
+        <div>
             <h2>Search for photos</h2>
             <input type="text" onChange={this.handlerForChange}></input>
-            <img src={this.state.imageUrl} style={{width:'50vh',height:'30vh'}}/>
-            </div>);
+            <div className="image-list">
+                {this.state.imageUrl.map(imageObj => {
+                    const {width, height}=imageObj;
+                    return <img src={imageObj.urls.regular} 
+                    key={imageObj.id}
+                    style={{gridRowEnd:`span ${Math.ceil(20 *height/width)}`}}/>;
+                })}
+            </div>
+        </div>
+        );
     }
 }
 export default SearchBar;
