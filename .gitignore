@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+#api Id
+/src/ID.jsx
 # production
 /build
 
